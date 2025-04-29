@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tasks</title>
+</head>
+<body>
+    <h1>Welcome{% if user.is_authenticated %}, {{ user.username }}{% endif %}!</h1>
+
+    {% if user.is_authenticated %}
+        <!-- Logout Form using POST -->
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+        <h2>Your Tasks:</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    {{ task.title }} {% if task.completed %}(Done){% endif %}
+                    <!-- Edit and Delete links -->
+                    [<a href="{% url 'edit_task' task.pk %}">Edit</a>]
+                    [<a href="{% url 'delete_task' task.pk %}">Delete</a>]
+                </li>
+            {% empty %}
+                <li>No tasks yet.</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'add_task' %}">➕ Add New Task</a>
+
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign Up</a></p>
+    {% endif %}
+</body>
+</html>
