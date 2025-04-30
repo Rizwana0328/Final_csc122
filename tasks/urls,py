@@ -1,13 +1,14 @@
 # tasks/urls.py
 from django.urls import path
-from . import views
-
+from .import views
+from .views import HomePageView
 
 urlpatterns = [
-    path('', views.home, name='home'),  # Home page
-    path('task/<int:pk>/', views.task_detail, name='task_detail'),  # Detail view
-    path('task/new/', views.task_create, name='task_create'),  # Create task
-    path('task/<int:pk>/edit/', views.task_update, name='task_update'),  # Update task
-    path('task/<int:pk>/delete/', views.task_delete, name='task_delete'),  # Delete task
-    path('add/', views.add_task, name='add_task'),  # If this is different from task_create
+    path('', views.home_view(), name='home'),
+    path('', views.task_list, name='task_list'),
+    path('', HomePageView.as_view(), name = 'home'),
+    path('', views.TaskListView.as_view(), name='task-list'),             # READ
+    path('task/create/', views.TaskCreateView.as_view(), name='task-create'),  # CREATE
+    path('task/<int:pk>/update/', views.TaskUpdateView.as_view(), name='task-update'),  # UPDATE
+    path('task/<int:pk>/delete/', views.TaskDeleteView.as_view(), name='task-delete'),  # DELETE
 ]

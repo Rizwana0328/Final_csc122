@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="thingstodo">
+  <h2>{{ object.title }}</h2>
+  <p>by {{ object.author }} | {{ object.date }}</p>
+  <p>{{ object.body }}</p>
+</div>
+<div>
+  <p><a href="{% url 'thingstodo_edit' thingstodo.pk %}">Edit</a>
+    <a href="{% url 'thingstodo_delete' thingstodo.pk %}">Delete</a>
+  </p>
+  <p>Back to <a href="{% url 'thingstodo_list' %}">All tasks</a>.</p>
+</div>
+{% endblock content %}

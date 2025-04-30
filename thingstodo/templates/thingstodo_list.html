@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}thingstodo{% endblock title %}
+
+{% block content %}
+{% for thingstodo in thingstodo_list %}
+<div class="card">
+  <div class="card-header">
+    <span class="fw-bold">
+      <!-- add link here! -->
+      <a href="{{ article.get_absolute_url }}">{{ thingstodo.title }}</a>
+    </span> &middot;
+    <span class="text-muted">by {{ thingstodo.author }} |
+      {{ thingstodo.date }}</span>
+  </div>
+  <div class="card-body">
+    {{ thingstodo.body }}
+  </div>
+  <div class="card-footer text-center text-muted">
+    <!-- new links here! -->
+    <a href="{% url 'thingstodo_edit' thingstodo.pk %}">Edit</a>
+    <a href="{% url 'thingstodo_delete' thingstodo.pk %}">Delete</a>
+  </div>
+</div>
+<br />
+{% endfor %}
+{% endblock content %}

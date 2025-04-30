@@ -17,13 +17,17 @@ Including another URLconf
 # taskmanager/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from tasks import views as task_views
+from django.shortcuts import render
+from django.views.generic.base import TemplateView  # new
+
+def home_view(request):
+    return render(request, 'home.html')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    #path('', include('tasks.urls')),  
-    path('accounts/', include('django.contrib.auth.urls')),  
-    path('', task_views.home, name='task_list'),
-    path('add/', task_views.add_task, name='add_task'),
-    path('signup/', task_views.signup, name='signup'),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("accounts.urls")),  # new
+    path("accounts/", include("django.contrib.auth.urls")), 
+    #path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
+    path('', home_view, name='home'),
+    path("thingstodo/", include("thingstodo.urls")),
 ]

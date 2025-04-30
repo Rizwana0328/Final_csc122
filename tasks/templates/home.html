@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to your To-Do List App</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header>
+        <h1>
+            <a href="{% url 'home' %}">
+                <strong>Welcome to your To-Do List App</strong>
+            </a>
+        </h1>
+    </header>
+
+    <div>
+        <p>This is your task manager.</p>
+    </div>
+</body>
+</html>

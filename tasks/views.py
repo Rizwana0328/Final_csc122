@@ -2,65 +2,50 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Task, Category
 from .forms import TaskForm
+from django.views.generic import TemplateView
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from .models import Task
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def home(request):
     tasks = Task.objects.filter(user=request.user)
     return render(request, 'tasks/home.html', {'tasks': tasks})
-@login_required
-def task_list(request):
-    tasks = Task.objects.filter(user=request.user)
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+def Home_view(request):
+    return render(request, 'home.html')
 
-@login_required
-def task_create(request):
-    form = TaskForm(request.POST or None)
-    if form.is_valid():
-        task = form.save(commit=False)
-        task.user = request.user
-        task.save()
-        return redirect('task_list')
-    return render(request, 'tasks/task_form.html', {'form': form})
+class HomePageView(TemplateView):
+    template_name = 'home.html'
 
-@login_required
-def task_update(request, pk):
-    task = get_object_or_404(Task, pk=pk, user=request.user)
-    form = TaskForm(request.POST or None, instance=task)
-    if form.is_valid():
-        form.save()
-        return redirect('task_list')
-    return render(request, 'tasks/task_form.html', {'form': form})
+class TaskListView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = 'tasks/task_list.html'
 
-@login_required
-def task_delete(request, pk):
-    task = get_object_or_404(Task, pk=pk, user=request.user)
-    if request.method == "POST":
-        task.delete()
-        return redirect('task_list')
-    return render(request, 'tasks/task_confirm_delete.html', {'task': task})
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
 
-from .forms import TaskForm
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    fields = ['title', 'description', 'completed', 'category']
+    template_name = 'tasks/task_form.html'
+    success_url = reverse_lazy('task-list')
 
-@login_required
-def add_task(request):
-    if request.method == 'POST':
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.user = request.user
-            task.save()
-            return redirect('home')
-    else:
-        form = TaskForm()
-    return render(request, 'tasks/add_task.html', {'form': form})
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    fields = ['title', 'description', 'completed', 'category']
+    template_name = 'tasks/task_form.html'
+    success_url = reverse_lazy('task-list')
+
+
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    model = Task
+    template_name = 'tasks/task_confirm_delete.html'
+    success_url = reverse_lazy('task-list')
