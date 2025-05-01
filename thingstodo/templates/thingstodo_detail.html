@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="thingstodo">
-  <h2>{{ object.title }}</h2>
-  <p>by {{ object.author }} | {{ object.date }}</p>
-  <p>{{ object.body }}</p>
-</div>
-<div>
-  <p><a href="{% url 'thingstodo_edit' thingstodo.pk %}">Edit</a>
-    <a href="{% url 'thingstodo_delete' thingstodo.pk %}">Delete</a>
-  </p>
-  <p>Back to <a href="{% url 'thingstodo_list' %}">All tasks</a>.</p>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title text-center text-primary">{{ object.title }}</h2>
+      <p class="card-subtitle mb-2 text-muted text-center">
+        by <strong>{{ object.author }}</strong> | {{ object.date }}
+      </p>
+      <p class="card-text">{{ object.body }}</p>
+    </div>
+  </div>
+
+  <div class="mt-4 text-center">
+    <a href="{% url 'thingstodo_edit' thingstodo.pk %}" class="btn btn-warning me-2">Edit</a>
+    <a href="{% url 'thingstodo_delete' thingstodo.pk %}" class="btn btn-danger me-2">Delete</a>
+    <p class="mt-3">Back to <a href="{% url 'thingstodo_list' %}" class="btn btn-link">All tasks</a></p>
+  </div>
 </div>
 {% endblock content %}

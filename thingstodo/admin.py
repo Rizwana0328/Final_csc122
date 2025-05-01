@@ -9,6 +9,6 @@ class thingstodoAdmin(admin.ModelAdmin):
         "body",
         "author",
     ]
+admin.site.register(thingstodo)
 
-
-admin.site.register(thingstodo, thingstodoAdmin)
+#admin.site.register(thingstodo, thingstodoAdmin)

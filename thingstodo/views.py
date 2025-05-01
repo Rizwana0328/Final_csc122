@@ -2,7 +2,10 @@ from django.views.generic import ListView, DetailView  # new
 from django.views.generic.edit import UpdateView, DeleteView, CreateView  # new
 from django.urls import reverse_lazy  # new
 from .models import thingstodo
+from django.views.generic import TemplateView
 
+class ThingstodoHomeView(TemplateView):
+    template_name = "thingstodo/home.html"
 
 class ThingstodoListView(ListView):
     model = thingstodo
@@ -37,3 +40,4 @@ class ThingstodoCreateView(CreateView):  # new
         "body",
         "author",
     )
+    success_url = '/'

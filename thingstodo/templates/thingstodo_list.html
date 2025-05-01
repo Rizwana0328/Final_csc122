@@ -1,27 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %}thingstodo{% endblock title %}
+{% block title %}Thingstodo{% endblock title %}
 
 {% block content %}
-{% for thingstodo in thingstodo_list %}
-<div class="card">
-  <div class="card-header">
-    <span class="fw-bold">
-      <!-- add link here! -->
-      <a href="{{ article.get_absolute_url }}">{{ thingstodo.title }}</a>
-    </span> &middot;
-    <span class="text-muted">by {{ thingstodo.author }} |
-      {{ thingstodo.date }}</span>
+<div class="container mt-5">
+  {% for thingstodo in thingstodo_list %}
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <span class="fw-bold">
+        <a href="{{ thingstodo.get_absolute_url }}" class="text-decoration-none text-primary">{{ thingstodo.title }}</a>
+      </span> &middot;
+      <span class="text-muted">by {{ thingstodo.author }} | {{ thingstodo.date }}</span>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ thingstodo.body|truncatewords:30 }}</p>
+    </div>
+    <div class="card-footer text-center text-muted">
+      <a href="{% url 'thingstodo_edit' thingstodo.pk %}" class="btn btn-warning btn-sm">Edit</a>
+      <a href="{% url 'thingstodo_delete' thingstodo.pk %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
   </div>
-  <div class="card-body">
-    {{ thingstodo.body }}
-  </div>
-  <div class="card-footer text-center text-muted">
-    <!-- new links here! -->
-    <a href="{% url 'thingstodo_edit' thingstodo.pk %}">Edit</a>
-    <a href="{% url 'thingstodo_delete' thingstodo.pk %}">Delete</a>
-  </div>
+  {% endfor %}
 </div>
-<br />
-{% endfor %}
 {% endblock content %}

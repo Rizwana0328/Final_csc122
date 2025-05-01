@@ -1,22 +1,85 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to your To-Do List App</title>
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
+
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        header strong {
+            font-weight: 700;
+        }
+
+        /* Content Section */
+        div {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        div p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 28px;
+            }
+
+            div {
+                padding: 15px;
+                margin: 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
+
     <header>
         <h1>
-            <a href="{% url 'home' %}">
-                <strong>Welcome to your To-Do List App</strong>
-            </a>
+            <strong>Welcome to your To-Do List App</strong>
         </h1>
     </header>
 
     <div>
-        <p>This is your task manager.</p>
+        <p>This is your task manager, where you can add, manage, and keep track of your daily tasks. Get started by adding your first task!</p>
     </div>
+
 </body>
+
 </html>

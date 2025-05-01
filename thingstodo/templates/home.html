@@ -1,20 +1,26 @@
-{% extends "base.html" %}
+{% extends "thingstodo/base.html" %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}Welcome to Your Thingstodo App{% endblock title %}
 
 {% block content %}
-{% if user.is_authenticated %}
-Hi {{ user.username }}! You are {{ user.age }} years old.
-<form action="{% url 'logout' %}" method="task">
-  {% csrf_token %}
-  <button type="submit">Log Out</button>
-</form>
-<br/>
-<p><a class="btn btn-primary" href="{% url 'thingstodo_list' %}" role="button">
-  View all thingstodo</a></p> <!-- new -->
-{% else %}
-<p>You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a> |
-<a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}
+<div class="container">
+  {% if user.is_authenticated %}
+    <div class="alert alert-success">
+      <h4>Hi {{ user.username }}!</h4>
+      <p>You are <strong>{{ user.age }}</strong> years old.</p>
+      <form action="{% url 'logout' %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Log Out</button>
+      </form>
+      <br/><br/>
+      <p><a class="btn btn-primary" href="{% url 'thingstodo_list' %}" role="button">View all thingstodo</a></p>
+    </div>
+  {% else %}
+    <div class="alert alert-warning">
+      <p>You are not logged in.</p>
+      <a href="{% url 'login' %}" class="btn btn-outline-primary">Log In</a> |
+      <a href="{% url 'signup' %}" class="btn btn-outline-success">Sign Up</a>
+    </div>
+  {% endif %}
+</div>
 {% endblock content %}

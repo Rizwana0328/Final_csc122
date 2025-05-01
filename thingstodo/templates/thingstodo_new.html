@@ -2,9 +2,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>New thingstodo</h1>
-<form action="" method="post">{% csrf_token %}
-  {{ form|crispy }}
-  <button class="btn btn-success ms-2" type="submit">Save</button>
-</form>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h1 class="text-center text-success mb-4">Add New Task</h1>
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          {{ form|crispy }}
+        </div>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-success btn-lg" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock content %}
